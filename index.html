@@ -33,22 +33,54 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Refuerzo de identidad institucional (solo estilos, sin contenido) --- */
+        main > section {
+            position: relative;
+            overflow: hidden;
+        }
+        main > section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #002855 0%, #005C93 50%, #00A4E4 100%);
+        }
+        /* Foco visible accesible en todos los elementos interactivos */
+        button:focus-visible, a:focus-visible {
+            outline: 2px solid #00A4E4;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
         @media print {
             header, footer, .no-print { display: none !important; }
-            .print-card { border: 1px solid #002855 !important; box-shadow: none !important; color: black !important; }
+            body { background: white !important; }
+            /* Comprobante en alto contraste para impresión: fondo claro, texto oscuro, bordes en vez de relleno (ahorra tinta y garantiza legibilidad en B/N) */
+            .print-card {
+                background: white !important;
+                background-image: none !important;
+                color: #002855 !important;
+                border: 2px solid #002855 !important;
+                box-shadow: none !important;
+            }
+            .print-card * {
+                color: #002855 !important;
+                background: transparent !important;
+                border-color: #002855 !important;
+                text-shadow: none !important;
+                -webkit-text-fill-color: #002855 !important;
+            }
+            .print-card .absolute { opacity: 0.06 !important; }
+            .print-card svg { color: #002855 !important; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-slate-800">
 
-    <header class="bg-inspt-dark text-white shadow-lg border-b-4 border-inspt-light sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-inspt-dark via-inspt-dark to-inspt-blue text-white shadow-lg border-b-4 border-inspt-light sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <svg class="w-10 h-10 text-inspt-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path>
-                </svg>
+                <img src="data:image/png;base64,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" alt="Logo UTN INSPT" class="h-11 w-auto rounded-xl shadow-sm">
                 <div>
                     <h1 class="text-xl font-extrabold tracking-tight">Instituto Nacional Superior del Profesorado Técnico (INSPT)</h1>
                     <p class="text-xs text-slate-300 font-medium">Universidad Tecnológica Nacional</p>
@@ -63,7 +95,7 @@
                 </div>
 
                 <div class="w-full sm:w-64 bg-slate-800 rounded-full h-5 relative overflow-hidden shadow-inner border border-slate-700">
-                    <div id="global-progress" class="bg-inspt-light h-full rounded-full transition-all duration-500" style="width: 10%;"></div>
+                    <div id="global-progress" class="bg-gradient-to-r from-inspt-blue to-inspt-light h-full rounded-full transition-all duration-500" style="width: 10%;"></div>
                     <span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white uppercase tracking-wider" id="progress-text">Progreso: 10%</span>
                 </div>
             </div>
@@ -72,7 +104,7 @@
 
     <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
 
-        <section id="sec-onboarding" class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-10 text-center max-w-3xl mx-auto transition-all duration-300">
+        <section id="sec-onboarding" class="bg-white rounded-xl shadow-lg border border-slate-100 p-6 md:p-10 text-center max-w-3xl mx-auto transition-all duration-300">
             <span class="bg-sky-100 text-inspt-blue text-xs font-extrabold px-3 py-1.5 rounded-full uppercase tracking-widest">Orientación al Ingresante y al Estudiante</span>
             <h2 class="text-3xl font-extrabold text-inspt-dark mt-4 mb-2">¡Bienvenido al INSPT-UTN!</h2>
             <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-2">
@@ -85,52 +117,52 @@
                 Consultá siempre la página web en la que se encuentran los detalles ampliados.
             </p>
             <a href="https://inspt.utn.edu.ar/" target="_blank" class="inline-flex items-center gap-2 text-[11px] text-inspt-blue hover:text-inspt-dark font-bold transition-colors underline underline-offset-2 mb-8">
-                <span>🌐</span> Página Web
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Página Web
             </a>
 
             <!-- Mapa de Ruta Visual -->
-            <div class="mb-10 w-full bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <div class="mb-10 w-full bg-slate-50 p-6 rounded-xl border border-slate-100">
                 <h3 class="text-xs font-black text-slate-500 mb-6 uppercase tracking-widest text-center">Etapas del Recorrido</h3>
                 <div class="flex flex-col md:flex-row items-center justify-between relative gap-4 md:gap-0">
                     <!-- Línea conectora (visible en desktop) -->
                     <div class="hidden md:block absolute left-8 right-8 top-5 h-1 bg-slate-200 z-0"></div>
                     
                     <div class="relative z-10 flex flex-col items-center gap-2 group w-full md:w-auto">
-                        <div class="w-10 h-10 rounded-full bg-inspt-blue text-white flex items-center justify-center font-bold shadow-md ring-4 ring-white text-lg">🏫</div>
+                        <div class="w-10 h-10 rounded-full bg-inspt-blue text-white flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-600 text-center uppercase">1. Oferta<br>Académica</span>
                     </div>
                     <div class="relative z-10 flex flex-col items-center gap-2 w-full md:w-auto">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white text-lg">📋</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-500 text-center uppercase">2. Trámites<br>Administrativos</span>
                     </div>
                     <div class="relative z-10 flex flex-col items-center gap-2 w-full md:w-auto">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white text-lg">💬</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-500 text-center uppercase">3. Reglas de<br>Admisión</span>
                     </div>
                     <div class="relative z-10 flex flex-col items-center gap-2 w-full md:w-auto">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white text-lg">⚖️</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-500 text-center uppercase">4. Toma de<br>Decisiones</span>
                     </div>
                     <div class="relative z-10 flex flex-col items-center gap-2 w-full md:w-auto">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white text-lg">📊</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-500 text-center uppercase">5. Régimen y<br>Regularidad</span>
                     </div>
                 </div>
             </div>
 
-            <button onclick="playConfirmSound(); changeSection('sec-level1');" class="bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3.5 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2 group transform hover:-translate-y-0.5 cursor-pointer">
+            <button onclick="playConfirmSound(); changeSection('sec-level1');" class="bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3.5 px-8 rounded-xl shadow-sm hover:shadow-lg transition-all inline-flex items-center gap-2 group transform hover:-translate-y-0.5 cursor-pointer">
                 Comenzar
                 <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
             </button>
         </section>
 
-        <section id="sec-level1" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 transition-all duration-300 relative">
+        <section id="sec-level1" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300 relative">
             <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
                 <div>
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 1: Clasificación de Perfiles Profesionales</span>
                     <h2 class="text-2xl font-black text-inspt-dark">Las Carreras</h2>
                 </div>
-                <div class="bg-sky-50 text-inspt-blue text-xs px-3 py-1.5 rounded-lg border border-sky-100 font-bold shrink-0">
+                <div class="bg-sky-50 text-inspt-blue text-xs px-3 py-1.5 rounded-xl border border-sky-100 font-bold shrink-0">
                     Aciertos: <span id="l1-score" class="text-sm font-black">0</span> de 5 correctos
                 </div>
             </div>
@@ -140,19 +172,19 @@
             </p>
             <div class="flex justify-end mb-2">
                 <a href="https://inspt.utn.edu.ar/carreras/" target="_blank" class="flex items-center gap-2 text-[11px] text-inspt-blue hover:text-inspt-dark font-bold transition-colors underline underline-offset-2">
-                    <span>🎓</span> Ver Oferta Formativa del INSPT
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path></svg> Ver Oferta Formativa del INSPT
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-                <div class="p-6 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col justify-between min-h-[260px]" id="l1-active-area">
+                <div class="p-6 bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl flex flex-col justify-between min-h-[260px]" id="l1-active-area">
                     <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Tarjeta Activa</div>
                     <div id="card-container" class="my-4"></div>
                     <div class="flex gap-3 justify-center" id="l1-action-buttons">
-                        <button onclick="playClickSound(); assignCategory('Profesorado')" class="bg-inspt-blue hover:bg-inspt-dark text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-0.5">
-                            <span>🏫</span> Profesorado
+                        <button onclick="playClickSound(); assignCategory('Profesorado')" class="bg-inspt-blue hover:bg-inspt-dark text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path></svg> Profesorado
                         </button>
-                        <button onclick="playClickSound(); assignCategory('Tecnicatura')" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-md flex items-center gap-2 transform hover:-translate-y-0.5">
-                            <span>⚙️</span> Tecnicatura
+                        <button onclick="playClickSound(); assignCategory('Tecnicatura')" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Tecnicatura
                         </button>
                     </div>
                 </div>
@@ -177,19 +209,19 @@
                 <button id="btn-next-l1" disabled onclick="playConfirmSound(); changeSection('sec-level2')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2 ml-auto">
                     Continuar al Nivel 2 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                 </button>
-                <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 ml-auto shadow-md">
-                    Volver al Índice <span>📚</span>
+                <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 ml-auto shadow-sm">
+                    Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                 </button>
             </div>
         </section>
 
-        <section id="sec-level2" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 transition-all duration-300">
+        <section id="sec-level2" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300">
             <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
                 <div>
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 2: Gestión de Procesos Administrativos</span>
                     <h2 class="text-2xl font-black text-inspt-dark">La Inscripción</h2>
                 </div>
-                <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3 py-1.5 rounded-lg border border-amber-200 font-bold shrink-0 transition-colors">Consulta en Detalle el Reglamento de Estudios</a>
+                <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="bg-inspt-dark/10 hover:bg-inspt-dark/20 text-inspt-dark text-xs px-3 py-1.5 rounded-xl border border-inspt-dark/20 font-bold shrink-0 transition-colors">Consulta en Detalle el Reglamento de Estudios</a>
             </div>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed">
                 Antes de iniciar el cursado de la carrera, debes cumplir secuencialmente una serie de requisitos administrativos obligatorios.<br>
@@ -200,7 +232,7 @@
                     <h4 class="font-bold text-xs text-slate-500 uppercase tracking-wider mb-2" id="l2-title-options">Hitos Disponibles (Ordena Secuencialmente):</h4>
                     <div id="timeline-options" class="space-y-2"></div>
                 </div>
-                <div class="lg:col-span-4 bg-slate-50 rounded-2xl p-5 border border-slate-200">
+                <div class="lg:col-span-4 bg-slate-50 rounded-xl p-5 border border-slate-200">
                     <div class="flex justify-between items-center mb-4 border-b pb-2">
                         <h4 class="font-extrabold text-xs text-inspt-dark uppercase tracking-wider">Camino de Inscripción:</h4>
                         <button id="btn-reset-l2" onclick="playClickSound(); resetTimeline()" class="text-xs text-inspt-blue hover:text-inspt-dark font-semibold hover:underline">Reiniciar orden</button>
@@ -211,14 +243,14 @@
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col items-center justify-center text-center shadow-sm">
                         <span class="text-xs font-bold text-inspt-dark mb-1">QR de Consulta</span>
                         <p class="text-[10px] text-slate-400 mb-2 leading-tight">Acceso a la información para matriculación.</p>
-                        <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-inner flex items-center justify-center">
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-inner flex items-center justify-center">
                             <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" title="Ir a inscripción INSPT-UTN">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAAC80lEQVR4nO2bSw6bMBCGvylIWRqpB+hRzM2qHqk3gKPkBngZCfR3YRuI+kirJhG0MwsE4lv80mhsz8Mm/sTGD3+Eg/POO/9SPlmxPpkx1jezbjFGa6n/2/focf7JfCNJEtDIPk+ggUbECSDMECVJ07v0OP88vgXAoJkhzGjsmpmxxzRaI4vXdobUQfz6Dj3OP5dv9x+pA8JU3B2nj+T4faMe51/IB0kDQNQMsJiG1P6cf7Ue5/+az97bkiQjgGC5c2sQkN6hx/nn80s+HkNqIV5brE8XEadG1gP5TG3du/Q4/zy+LcEJlAgFINxMJNDYNexLIEfT7/wDk6ZG5RgV5vKZU6P1b9SccyYNR9Pv/AMrqW+QNOxy3aYGbVDxfpzcv+fjkVScVwsaym/S1GSfawCP33Py2b/ZedKW6za5nJVtqAu3+/eEfLrI+jBj1jXaopaomVyTJrWULfqA+p3/DT6ZaUhm1rMY8WpWiXK+8vzolPx6YC4Hqt1eu1rhJF+fT8ev+ZGUu0Zse+0GrQdr9+95eevrWZmxA+vXP/Ha/oB/tR7nn8OHm+VVWdeWmiTdrCS8FdQX7++fkN9VqHZVqy0hyrsu6xJ+NP3OP7BdGaNUsmbYZjqiVk97/nta3vp0kfVbrzfM1J7SRRBuZvbJ89/z8UgTaNjqz/WzdBXCXRB7/J6ML6vyOktXdtxpnbnLji/Td+7fM/KLlTZCauuqDDlJqlaQY+p3/he2i9V4F8n7z63TcDT9zj+wXR0yTzizViq3JGlat+ij6Xf+Ib/dX4AyOhlr1blWstbu8AH1O/8La8mj7axD7gBjNwGpxQBEWgzC9AY9zr+CL5eLwq1eM2Ix8oGZxcw6j99/gU8XAYsRJ7Cexexzrm7dapP/0Pqd/97qLF2N0DiVSZ2S9daHn59Pyd/dXwiCscM09utNhtTOkAyRPs7H0+/8A6tZEaV/FNchu/wW6ris9/fPyN/dX8hxvI4+b29hriF+NP3OO/8/898A19wwiMZsJi4AAAAASUVORK5CYII=" 
          alt="QR Oficial INSPT-UTN" 
          class="w-36 h-36 object-contain">
 </a>
                                </div>
-                        <span class="text-[10px] font-bold text-inspt-blue mt-3 bg-sky-50 px-2 py-1 rounded border border-sky-100 uppercase tracking-wide">Triunvirato 3174, CABA</span>
+                        <span class="text-[10px] font-bold text-inspt-blue mt-3 bg-sky-50 px-2 py-1 rounded-full border border-sky-100 uppercase tracking-wide">Triunvirato 3174, CABA</span>
                     </div>
                     <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
                         <h5 class="text-xs font-bold text-amber-800 flex items-center gap-1 mb-1">
@@ -237,20 +269,20 @@
                     <button id="btn-next-l2" disabled onclick="playConfirmSound(); changeSection('sec-level-new')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Continuar al Nivel 3 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-md">
-                        Volver al Índice <span>📚</span>
+                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
+                        Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </button>
                 </div>
             </div>
         </section>
 
-        <section id="sec-level-new" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 transition-all duration-300 relative">
+        <section id="sec-level-new" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300 relative">
             <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
                 <div>
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 3: Validación de Reglas de Admisión</span>
                     <h2 class="text-2xl font-black text-inspt-dark">Las consultas vinculadas con el ingreso</h2>
                 </div>
-                <div class="bg-indigo-50 text-indigo-700 text-xs px-3 py-1.5 rounded-lg border border-indigo-100 font-bold shrink-0">
+                <div class="bg-[#0A3F60]/10 text-[#0A3F60] text-xs px-3 py-1.5 rounded-xl border border-[#0A3F60]/20 font-bold shrink-0">
                     Aciertos: <span id="lnew-score" class="text-sm font-black">0</span> de 10 correctos
                 </div>
             </div>
@@ -259,11 +291,11 @@
                 y dictaminar si es <strong> Falso</strong> o <strong> Verdadero</strong>.
             </p>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                <div class="lg:col-span-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between min-h-[300px]" id="lnew-active-area">
+                <div class="lg:col-span-8 p-6 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between min-h-[300px]" id="lnew-active-area">
                     <div>
                         <div class="flex items-center justify-between border-b pb-3 mb-4">
-                            <span class="text-[10px] uppercase font-bold text-indigo-600 tracking-wider block" id="lnew-progress-text">Caso 1 de 10</span>
-                            <span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Mesa de Ayuda</span>
+                            <span class="text-[10px] uppercase font-bold text-[#0A3F60] tracking-wider block" id="lnew-progress-text">Caso 1 de 10</span>
+                            <span class="bg-[#0A3F60]/15 text-[#0A3F60] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Mesa de Ayuda</span>
                         </div>
                         <h4 class="text-xs font-extrabold uppercase tracking-wider mb-2" style="color:#000000" id="lnew-declaracion-label">Declaración del Aspirante:</h4>
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative min-h-[120px] flex items-center">
@@ -272,33 +304,33 @@
                         </div>
                     </div>
                     <div class="flex gap-4 mt-6 justify-center" id="lnew-action-buttons">
-                        <button onclick="playClickSound(); submitLevelNewAnswer(false)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-extrabold px-6 py-3 rounded-xl transition-all shadow-sm flex items-center gap-2 transform hover:-translate-y-0.5 w-full sm:w-auto justify-center">
+                        <button onclick="playClickSound(); submitLevelNewAnswer(false)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-extrabold px-6 py-3 rounded-xl transition-all shadow-sm hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5 w-full sm:w-auto justify-center">
                             <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                             Falso
                         </button>
-                        <button onclick="playClickSound(); submitLevelNewAnswer(true)" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-extrabold px-6 py-3 rounded-xl transition-all shadow-sm flex items-center gap-2 transform hover:-translate-y-0.5 w-full sm:w-auto justify-center">
+                        <button onclick="playClickSound(); submitLevelNewAnswer(true)" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-extrabold px-6 py-3 rounded-xl transition-all shadow-sm hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5 w-full sm:w-auto justify-center">
                             <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                             Verdadero
                         </button>
                     </div>
                 </div>
-                <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col justify-between">
+                <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
                     <div>
                         <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            <svg class="w-4 h-4 text-[#0A3F60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             Departamento de Alumnos
                         </h4>
                         <p class="text-[11px] text-slate-600 leading-relaxed mb-4">Los procesos de ingreso se tramitan exclusivamente en el Dpto. de Alumnos. Si tienes dudas puedes consultar en el Reglamento de Estudios en la página web.</p>
                         <div class="space-y-2 border-t pt-3">
-                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><span>📍</span> Sede: Triunvirato 3174, CABA</div>
-                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><span>⏰</span> Horario: Lunes a Viernes de 9 a 20 hs</div>
-                            <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="flex items-center gap-2 text-[10px] text-indigo-700 hover:text-indigo-900 font-bold transition-colors"><span>📋</span> Reglamentos estudiantiles</a>
-                            <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" class="flex items-center gap-2 text-[10px] text-indigo-700 hover:text-indigo-900 font-bold transition-colors"><span>🔗</span> Proceso de inscripción</a>
-                            <a href="mailto:deptoalumnos@inspt.utn.edu.ar" class="flex items-center gap-2 text-[10px] text-indigo-700 hover:text-indigo-900 font-bold transition-colors"><span>✉️</span> deptoalumnos@inspt.utn.edu.ar</a>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Sede: Triunvirato 3174, CABA</div>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Horario: Lunes a Viernes de 9 a 20 hs</div>
+                            <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="flex items-center gap-2 text-[10px] text-[#0A3F60] hover:text-inspt-dark font-bold transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg> Reglamentos estudiantiles</a>
+                            <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" class="flex items-center gap-2 text-[10px] text-[#0A3F60] hover:text-inspt-dark font-bold transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg> Proceso de inscripción</a>
+                            <a href="mailto:deptoalumnos@inspt.utn.edu.ar" class="flex items-center gap-2 text-[10px] text-[#0A3F60] hover:text-inspt-dark font-bold transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> deptoalumnos@inspt.utn.edu.ar</a>
                         </div>
                     </div>
-                    <div class="bg-indigo-50 border border-indigo-100 p-3.5 rounded-xl mt-4">
-                        <span class="text-[10px] font-black uppercase text-indigo-800 block mb-1">Dato Clave:</span>
+                    <div class="bg-[#0A3F60]/10 border border-[#0A3F60]/20 p-3.5 rounded-xl mt-4">
+                        <span class="text-[10px] font-black uppercase text-[#0A3F60] block mb-1">Dato Clave:</span>
                         <p class="text-[10px] text-slate-600 leading-relaxed">Las vacantes para realizar el curso/seminario/taller de ingreso son limitadas en función de la disponibilidad efectiva de cada carrera.</p>
                     </div>
                 </div>
@@ -311,29 +343,29 @@
                     <button id="btn-next-lnew" disabled onclick="playConfirmSound(); changeSection('sec-level3')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Continuar al Nivel 4 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-md">
-                        Volver al Índice <span>📚</span>
+                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
+                        Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </button>
                 </div>
             </div>
         </section>
 
-        <section id="sec-level3" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 transition-all duration-300 relative">
+        <section id="sec-level3" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300 relative">
             <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
                 <div>
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 4: Toma de Decisiones Reglamentarias</span>
                     <h2 class="text-2xl font-black text-inspt-dark">Simulador de Cursada y Aprobación</h2>
                 </div>
                 <div class="flex flex-col items-end gap-1">
-                    <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1.5 rounded-lg border border-emerald-200 font-bold">Disposiciones del Reglamento General</span>
-                    <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="flex items-center gap-2 text-[10px] text-emerald-700 hover:text-emerald-900 font-bold transition-colors underline underline-offset-2"><span>📋</span> Reglamentos estudiantiles</a>
+                    <span class="bg-inspt-light/15 text-inspt-dark text-xs px-3 py-1.5 rounded-xl border border-inspt-light/30 font-bold">Disposiciones del Reglamento General</span>
+                    <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="flex items-center gap-2 text-[10px] text-inspt-blue hover:text-inspt-dark font-bold transition-colors underline underline-offset-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg> Reglamentos estudiantiles</a>
                 </div>
             </div>
             <p class="text-sm text-slate-600 mb-3 leading-relaxed">A continuación te presentamos dilemas frecuentes que se le pueden presentar a un estudiante.</p>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="l3-instructions">Las decisiones sobre el cumplimiento de asistencia, procesos de cursado y evaluación definen la trayectoria.</p>
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-inner flex flex-col md:flex-row">
+            <div class="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner flex flex-col md:flex-row">
                 <div class="bg-inspt-dark p-6 flex flex-col justify-center items-center text-white md:w-1/3 text-center gap-3">
-                    <div class="w-20 h-20 bg-gradient-to-tr from-inspt-blue to-inspt-light rounded-full flex items-center justify-center text-4xl shadow-md border-4 border-white/20 select-none" id="case-avatar-icon">🎓</div>
+                    <div class="w-20 h-20 bg-gradient-to-tr from-inspt-blue to-inspt-light rounded-full flex items-center justify-center text-4xl shadow-sm border-4 border-white/20 select-none" id="case-avatar-icon"><svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path></svg></div>
                     <div>
                         <h4 id="case-avatar-name" class="font-extrabold text-lg">Agustín</h4>
                         <p class="text-[10px] uppercase text-inspt-light font-extrabold tracking-wider" id="case-avatar-role">Aspirante Universitario</p>
@@ -357,30 +389,30 @@
                     <button id="btn-next-l3" disabled onclick="playConfirmSound(); changeSection('sec-level5')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Continuar al Nivel 5 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-md">
-                        Volver al Índice <span>📚</span>
+                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
+                        Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </button>
                 </div>
             </div>
         </section>
 
-        <section id="sec-level5" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 transition-all duration-300 relative">
+        <section id="sec-level5" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300 relative">
             <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
                 <div>
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 5: Régimen Académico y Regularidad</span>
                     <h2 class="text-2xl font-black text-inspt-dark">El Tablero de Control Académico</h2>
                 </div>
-                <div class="bg-teal-50 text-teal-700 text-xs px-3 py-1.5 rounded-lg border border-teal-100 font-bold shrink-0">
+                <div class="bg-[#B85C00]/10 text-[#B85C00] text-xs px-3 py-1.5 rounded-xl border border-[#B85C00]/20 font-bold shrink-0">
                     Auditado: <span id="l5-progress-counter" class="text-sm font-black">0</span> de 12 pautas
                 </div>
             </div>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="l5-instructions">Como alumno regular de la UTN-INSPT, debes manejar con precisión los mecanismos de cursado, asistencia, acreditaciones e inscripciones a exámenes finales para asegurar tu permanencia sin contratiempos.</p>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                <div class="lg:col-span-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between min-h-[320px]">
+                <div class="lg:col-span-8 p-6 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between min-h-[320px]">
                     <div>
                         <div class="flex items-center justify-between border-b pb-3 mb-4">
-                            <span class="text-[10px] uppercase font-bold text-teal-600 tracking-wider block" id="l5-progress-text">Caso de Estudio 1 de 12</span>
-                            <span class="bg-teal-100 text-teal-800 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider"></span>
+                            <span class="text-[10px] uppercase font-bold text-[#B85C00] tracking-wider block" id="l5-progress-text">Caso de Estudio 1 de 12</span>
+                            <span class="bg-[#B85C00]/15 text-[#B85C00] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"></span>
                         </div>
                         <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2" id="l5-question-category">Inscripción y Permanencia:</h4>
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm min-h-[100px] flex items-center">
@@ -389,21 +421,21 @@
                     </div>
                     <div class="space-y-2 mt-6" id="l5-options-container"></div>
                 </div>
-                <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col justify-between">
+                <div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
                     <div>
                         <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            <svg class="w-4 h-4 text-[#B85C00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             Permanencia Académica
                         </h4>
                         <p class="text-[11px] text-slate-600 leading-relaxed mb-4">Los procesos de regularidad y acreditaciones dependen de las disposiciones reglamentarias vigentes del INSPT y se realizan en los plazos establecidos por calendario académico.</p>
                         <div class="space-y-2 border-t pt-3">
-                            <a href="https://inspt.utn.edu.ar/bienestar-estudiantil/" target="_blank" class="flex items-center gap-2 text-[10px] text-teal-700 hover:text-teal-900 font-bold transition-colors"><span>📅</span> Enlace: Calendario Académico Oficial</a>
-                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><span>🏢</span> Depto. de Alumnos: Sede Triunvirato</div>
-                            <a href="http://sysacadweb.inspt.utn.edu.ar/sysacadINSPT/loginAlumno.asp?_gl=1*1wc4f08*_gcl_au*OTY5OTE2NDkuMTc4MjIzOTYwOA..*_ga*MTUzMzk5MTA0Ny4xNjY5Mjk3NDQz*_ga_Z8MH5PXFJ8*czE3ODI2NDk2NDEkbzI2MSRnMSR0MTc4MjY0OTY2NSRqMzYkbDAkaDA." target="_blank" class="flex items-center gap-2 text-[10px] text-teal-700 hover:text-teal-900 font-bold transition-colors"><span>🖥️</span> Enlace a SysAcad</a>
+                            <a href="https://inspt.utn.edu.ar/bienestar-estudiantil/" target="_blank" class="flex items-center gap-2 text-[10px] text-[#B85C00] hover:text-inspt-dark font-bold transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Enlace: Calendario Académico Oficial</a>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-500 font-bold"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg> Depto. de Alumnos: Sede Triunvirato</div>
+                            <a href="http://sysacadweb.inspt.utn.edu.ar/sysacadINSPT/loginAlumno.asp?_gl=1*1wc4f08*_gcl_au*OTY5OTE2NDkuMTc4MjIzOTYwOA..*_ga*MTUzMzk5MTA0Ny4xNjY5Mjk3NDQz*_ga_Z8MH5PXFJ8*czE3ODI2NDk2NDEkbzI2MSRnMSR0MTc4MjY0OTY2NSRqMzYkbDAkaDA." target="_blank" class="flex items-center gap-2 text-[10px] text-[#B85C00] hover:text-inspt-dark font-bold transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Enlace a SysAcad</a>
                         </div>
                     </div>
-                    <div class="bg-teal-50 border border-teal-100 p-3.5 rounded-xl mt-4">
-                        <span class="text-[10px] font-black uppercase text-teal-800 block mb-1">Dato Clave de Permanencia:</span>
+                    <div class="bg-[#B85C00]/10 border border-[#B85C00]/20 p-3.5 rounded-xl mt-4">
+                        <span class="text-[10px] font-black uppercase text-[#B85C00] block mb-1">Dato Clave de Permanencia:</span>
                         <p class="text-[10px] text-slate-600 leading-relaxed">No pierdas de vista los requerimientos del 75% de asistencia. La asistencia es independiente por materia.</p>
                     </div>
                 </div>
@@ -416,21 +448,21 @@
                     <button id="btn-next-l5" disabled onclick="playConfirmSound(); changeSection('sec-fin')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Finalizar Ruta Académica <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-md">
-                        Volver al Índice <span>📚</span>
+                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
+                        Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </button>
                 </div>
             </div>
         </section>
 
-        <section id="sec-fin" class="hidden bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-10 text-center max-w-4xl mx-auto transition-all duration-300">
+        <section id="sec-fin" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 md:p-10 text-center max-w-4xl mx-auto transition-all duration-300">
             <div class="no-print">
                 <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">Niveles Completos</span>
                 <h2 class="text-3xl font-black text-inspt-dark mt-4 mb-2">¡Felicitaciones!</h2>
                 <p class="text-slate-600 text-sm md:text-base leading-relaxed mb-6 max-w-xl mx-auto">Te invitamos a recorrer los reglamentos y página web para conocer en más detalle la normativa del INSPT.</p>
             </div>
             
-            <div class="print-card bg-gradient-to-br from-inspt-dark to-slate-900 text-white rounded-3xl p-6 md:p-8 text-left shadow-2xl border border-slate-700 max-w-xl mx-auto mb-8 relative overflow-hidden">
+            <div class="print-card bg-gradient-to-br from-inspt-dark to-slate-900 text-white rounded-xl p-6 md:p-8 text-left shadow-lg border border-slate-700 max-w-xl mx-auto mb-8 relative overflow-hidden">
                 <div class="absolute right-[-30px] bottom-[-30px] opacity-10 text-9xl font-black select-none pointer-events-none">UTN</div>
                 <div class="flex justify-between items-start border-b border-white/20 pb-4 mb-6">
                     <div>
@@ -448,16 +480,16 @@
                 <div class="border-t border-white/20 pt-4 space-y-3">
                     <h5 class="text-[10px] font-black uppercase tracking-wider text-inspt-light">Importante: consulta Accesos Oficiales</h5>
                     <div class="flex flex-wrap gap-2 text-[10px] no-print">
-                        <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 border border-white/5"><span>🔗</span> Detalles de inscripción (documentación / ingreso / fechas)</a>
-                        <a href="https://inspt.utn.edu.ar/wp-content/uploads/2026/02/Reglamento-Tecnicaturas-Dispo-665_2024.pdf" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 border border-white/5"><span>📄</span> Reglamento Tecnicaturas (PDF)</a>
-                        <a href="https://inspt.utn.edu.ar/wp-content/uploads/2025/02/Reglamento_Carreras-de-Grado.pdf" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 border border-white/5"><span>📄</span> Reglamento Profesorados</a>
-                        <a href="https://inspt.utn.edu.ar/carreras/" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 border border-white/5"><span>🎓</span> Planes de las Carreras</a>
+                        <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-white/5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg> Detalles de inscripción (documentación / ingreso / fechas)</a>
+                        <a href="https://inspt.utn.edu.ar/wp-content/uploads/2026/02/Reglamento-Tecnicaturas-Dispo-665_2024.pdf" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-white/5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Reglamento Tecnicaturas (PDF)</a>
+                        <a href="https://inspt.utn.edu.ar/wp-content/uploads/2025/02/Reglamento_Carreras-de-Grado.pdf" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-white/5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Reglamento Profesorados</a>
+                        <a href="https://inspt.utn.edu.ar/carreras/" target="_blank" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-white/5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path></svg> Planes de las Carreras</a>
                     </div>
                 </div>
             </div>
             
             <div class="no-print flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 text-sm shadow-md">
+                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 text-sm shadow-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     Imprimir Comprobante
                 </button>
@@ -468,27 +500,27 @@
 
             <!-- Índice de Consulta Rápida (Guía permanente) -->
             <div class="mt-12 border-t border-slate-200 pt-8 no-print">
-                <h3 class="text-xl font-black text-inspt-dark mb-2 flex items-center justify-center gap-2"><span>📚</span> Índice de Consulta Rápida</h3>
+                <h3 class="text-xl font-black text-inspt-dark mb-2 flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg> Índice de Consulta Rápida</h3>
                 <p class="text-sm text-slate-500 mb-8 max-w-2xl mx-auto">Repasa los contenidos reglamentarios validados en cada etapa como guía permanente de estudio (sin tener que volver a jugar).</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <button onclick="changeSection('sec-level1')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:-translate-y-1">
-                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">1</div>
+                    <button onclick="changeSection('sec-level1')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">1</div>
                         <span class="text-sm font-bold leading-tight">Clasificación de Perfiles</span>
                     </button>
-                    <button onclick="changeSection('sec-level2')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:-translate-y-1">
-                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">2</div>
+                    <button onclick="changeSection('sec-level2')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">2</div>
                         <span class="text-sm font-bold leading-tight">Procesos Administrativos</span>
                     </button>
-                    <button onclick="changeSection('sec-level-new')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:-translate-y-1">
-                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">3</div>
+                    <button onclick="changeSection('sec-level-new')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">3</div>
                         <span class="text-sm font-bold leading-tight">Reglas de Admisión</span>
                     </button>
-                    <button onclick="changeSection('sec-level3')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:-translate-y-1">
-                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">4</div>
+                    <button onclick="changeSection('sec-level3')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">4</div>
                         <span class="text-sm font-bold leading-tight">Toma de Decisiones</span>
                     </button>
-                    <button onclick="changeSection('sec-level5')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:-translate-y-1 md:col-start-2">
-                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">5</div>
+                    <button onclick="changeSection('sec-level5')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1 md:col-start-2">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">5</div>
                         <span class="text-sm font-bold leading-tight">Régimen y Regularidad</span>
                     </button>
                 </div>
@@ -504,25 +536,25 @@
     </footer>
 
     <div id="feedback-modal" class="fixed inset-0 bg-slate-900/70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-all duration-300 ease-out">
-        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden transform scale-95 transition-all duration-300" id="feedback-content-box">
+        <div class="bg-white rounded-xl max-w-lg w-full shadow-2xl overflow-hidden transform scale-95 transition-all duration-300" id="feedback-content-box">
             <div id="modal-header-bg" class="bg-inspt-blue p-4 flex justify-between items-center text-white">
-                <h3 class="font-bold text-base flex items-center gap-2" id="modal-header-title"><span>💡</span> Retroalimentación Académica</h3>
+                <h3 class="font-bold text-base flex items-center gap-2" id="modal-header-title"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg> Retroalimentación Académica</h3>
                 <button onclick="playClickSound(); closeModal()" class="text-white/80 hover:text-white font-extrabold text-2xl transition-colors">&times;</button>
             </div>
             <div class="p-6">
                 <div class="flex items-center gap-4 mb-4">
                     <div id="modal-status-badge-container" class="w-12 h-12 rounded-full flex items-center justify-center text-3xl shadow-inner bg-slate-100">
-                        <span id="modal-status-icon">🎉</span>
+                        <span id="modal-status-icon"><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></span>
                     </div>
                     <div>
-                        <span id="modal-status-badge" class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider border border-emerald-200">Correcto</span>
+                        <span id="modal-status-badge" class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-xl uppercase tracking-wider border border-emerald-200">Correcto</span>
                         <h4 id="modal-status-title" class="font-extrabold text-slate-800 text-base mt-1">¡Análisis correcto!</h4>
                     </div>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
                     <p id="modal-explanation" class="text-slate-600 text-xs md:text-sm leading-relaxed custom-scrollbar max-h-[160px] overflow-y-auto"></p>
                 </div>
-                <button onclick="playClickSound(); closeModal()" id="modal-action-btn" class="w-full bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-md transform hover:-translate-y-0.5">
+                <button onclick="playClickSound(); closeModal()" id="modal-action-btn" class="w-full bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-lg transform hover:-translate-y-0.5">
                     Entendido, Continuar
                 </button>
             </div>
@@ -553,7 +585,19 @@
     const PROGRESS_MAP = {'sec-onboarding':10,'sec-level1':25,'sec-level2':45,'sec-level-new':65,'sec-level3':80,'sec-level5':95,'sec-fin':100};
 
     // Paleta de colores alternada para las tarjetas (Nivel 1 y Nivel 3)
-    const ALT_COLORS = ['#fcaf07', '#689fab'];
+    const ALT_COLORS = ['#B85C00', '#0A3F60'];
+
+    // --- Librería de íconos SVG lineales (reemplaza emojis en contenido dinámico) ---
+    const ICON_SVG = {
+        'chart-bar': '<path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>',
+        'pencil': '<path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>',
+        'book-open': '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>',
+        'academic-cap': '<path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10"></path>'
+    };
+    function iconSvg(key, cls) {
+        cls = cls || 'w-5 h-5';
+        return `<svg class="${cls}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${ICON_SVG[key] || ''}</svg>`;
+    }
 
     const DATA = {
         level1: { bank: [
@@ -586,7 +630,7 @@
             { statement: "Al presentar una solicitud para que me reconozcan equivalencias de materias aprobadas en otra institución de educación superior reconocida, dentro de los plazos reglamentarios, no es necesario que empiece a cursar la materia.", isTrue: false, feedback: "El aspirante puede presentar la solicitud de equivalencias dentro de los plazos establecidos por el Calendario Académico (disponible en https://inspt.utn.edu.ar/bienestar-estudiantil/). Sin embargo, hasta que no disponga del dictamen formal aprobatorio, se sugiere que curse la materia solicitada para no quedar libre, en caso de que el dictamen sea desfavorable." }
         ]},
         level3: { scenarios: [
-            { avatarName: "Thiago", avatarIcon: "📊", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
+            { avatarName: "Thiago", avatarIcon: "chart-bar", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
               chapterTitle: "Calificaciones", title: "Calificación",
               description: "Thiago fue calificado con un 4 tanto en los parciales que rindió en Junio 2026 como en mesa de final de Febrero 2025. ¿Cuál es su condición académica de acuerdo al reglamento?",
               options: [
@@ -594,7 +638,7 @@
                 { text: "Aprobó tanto el parcial como el final ya que fue calificada con 4 o más puntos.", isCorrect: false, feedback: "¡Incorrecto! El reglamento especifica que la calificación mínima para la aprobación es de 6 puntos." }
               ]
             },
-            { avatarName: "Milena", avatarIcon: "📊", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
+            { avatarName: "Milena", avatarIcon: "chart-bar", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
               chapterTitle: "Régimen de Aprobación", title: "Condiciones de Aprobación de la Materia",
               description: "Milena obtuvo 9 en el primer examen parcial de Análisis Matemático I, un 8 en el segundo, y cuenta con un 80% de asistencia registrada. ¿Cuál es su condición académica de acuerdo al reglamento?",
               options: [
@@ -602,7 +646,7 @@
                 { text: "Debe rendir un examen final presencial en los turnos subsiguientes debido a que promedia menos de 9.", isCorrect: false, feedback: "¡Incorrecto! No se requiere un promedio de 9 para la Aprobación Directa. Alcanza con nota mínima de 8 en cada examen parcial." }
               ]
             },
-            { avatarName: "Juan", avatarIcon: "📝", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
+            { avatarName: "Juan", avatarIcon: "pencil", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
               chapterTitle: "Régimen de Aprobación", title: "Condiciones de Aprobación de la Materia",
               description: "Juan obtuvo 9 en los dos parciales de una materia, cuenta con un 63% de asistencia registrada y se le otorgó la reincorporación que ha solicitado. ¿Cuál es su condición académica de acuerdo con el reglamento?",
               options: [
@@ -610,7 +654,7 @@
                 { text: "Debe rendir un examen final presencial en los turnos subsiguientes debido a que solicitó la reincorporación por no haber cumplido con el 75% de asistencia.", isCorrect: true, feedback: "¡Excelente! El reglamento especifica que los estudiantes que obtienen como mínimo 8 puntos en cada parcial evaluatorio y asisten al menos al 75% de las clases solo logran la Aprobación directa." }
               ]
             },
-            { avatarName: "Esteban", avatarIcon: "📖", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
+            { avatarName: "Esteban", avatarIcon: "book-open", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
               chapterTitle: "Régimen de Aprobación", title: "Calificación de exámenes: Condiciones de Aprobación de la materia",
               description: "Esteban obtuvo en un parcial 9 y en otro 5 puntos y tiene registrado más del 75% de asistencia en la materia. ¿Cuál es su condición académica de acuerdo con el reglamento?",
               options: [
@@ -618,7 +662,7 @@
                 { text: "No aprobación: la calificación mínima para aprobar cada examen es de 6 puntos. La materia no está aprobada. Debe recuperar ese examen.", isCorrect: true, feedback: "¡Excelente! El reglamento especifica que la calificación mínima de aprobación es de 6 puntos." }
               ]
             },
-            { avatarName: "Joaquín", avatarIcon: "📖", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
+            { avatarName: "Joaquín", avatarIcon: "book-open", avatarRole: "Estudiante", avatarFooter: "Reglamento General",
               chapterTitle: "Régimen de Aprobación", title: "Calificación de exámenes: Condiciones de Aprobación de la materia",
               description: "Joaquín obtuvo en un parcial 5 y en otro 4 puntos y tiene registrado más del 75% de asistencia en la materia. ¿Cuál es su condición académica de acuerdo con el reglamento?",
               options: [
@@ -683,7 +727,11 @@
 
     function changeSection(id) { 
         SECTIONS.forEach(s=>document.getElementById(s).classList.add('hidden')); 
-        document.getElementById(id).classList.remove('hidden'); 
+        const target = document.getElementById(id);
+        target.classList.remove('hidden'); 
+        target.classList.remove('animate-fade-in');
+        void target.offsetWidth; // reinicia la animación
+        target.classList.add('animate-fade-in');
         state.progress = PROGRESS_MAP[id] || state.progress; 
         updateProgressBar(); 
         
@@ -737,7 +785,7 @@
         count.textContent = state.streak;
     }
 
-    function unlockBtn(id) { const btn=document.getElementById(id); btn.removeAttribute('disabled'); btn.className='bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-md transform hover:-translate-y-0.5 cursor-pointer'; }
+    function unlockBtn(id) { const btn=document.getElementById(id); btn.removeAttribute('disabled'); btn.className='bg-inspt-blue hover:bg-inspt-dark text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer'; }
     function lockBtn(id) { const btn=document.getElementById(id); btn.setAttribute('disabled','true'); btn.className='bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2'; }
 
     function initLevel1() {
@@ -749,8 +797,8 @@
         if (!state.level1.done) {
             if (idx < bank.length) {
                 const desafioColor = ALT_COLORS[idx % 2];
-cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 animate-fade-in"><span class="text-[10px] uppercase font-bold tracking-wider block mb-2" style="color:${desafioColor}">Desafío ${idx+1} de 5</span><h5 class="text-xs font-bold mb-1" style="color:#000000">Descriptor:</h5><p class="text-xs md:text-sm leading-relaxed font-semibold italic" style="color:${desafioColor}">"${bank[idx].text}"</p></div>`;            } else {
-                cont.innerHTML = `<div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200 text-center animate-fade-in"><span class="text-4xl block">🏆</span><h4 class="font-extrabold text-sm text-emerald-800 mt-2">¡Nivel 1 Completado!</h4><p class="text-xs text-slate-600 mt-1">Conoces la diferencia entre Profesorados y Tecnicaturas.</p></div>`;
+cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 animate-fade-in"><span class="text-[10px] uppercase font-bold tracking-wider block mb-2" style="color:${desafioColor}">Desafío ${idx+1} de 5</span><h5 class="text-xs font-bold mb-1" style="color:#000000">Descriptor:</h5><p class="text-xs md:text-sm leading-relaxed font-semibold italic" style="color:${desafioColor}">"${bank[idx].text}"</p></div>`;            } else {
+                cont.innerHTML = `<div class="bg-emerald-50 p-5 rounded-xl border border-emerald-200 text-center animate-fade-in"><span class="block flex justify-center"><svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg></span><h4 class="font-extrabold text-sm text-emerald-800 mt-2">¡Nivel 1 Completado!</h4><p class="text-xs text-slate-600 mt-1">Conoces la diferencia entre Profesorados y Tecnicaturas.</p></div>`;
                 unlockBtn('btn-next-l1');
                 state.level1.done = true;
             }
@@ -758,8 +806,8 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             // MODO CONSULTA PERMANENTE
             document.getElementById('l1-instructions').innerHTML = "<b>Guía Permanente:</b> Repaso de la clasificación de perfiles formativos.";
             document.getElementById('l1-action-buttons').classList.add('hidden');
-            cont.innerHTML = `<div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 animate-fade-in">
-                <h4 class="font-extrabold text-sm text-inspt-dark mb-3 flex items-center gap-2"><span>📚</span> Índice de Perfiles Validados</h4>
+            cont.innerHTML = `<div class="bg-sky-50 p-4 rounded-xl border border-sky-200 animate-fade-in">
+                <h4 class="font-extrabold text-sm text-inspt-dark mb-3 flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg> Índice de Perfiles Validados</h4>
                 <div class="space-y-3 max-h-[220px] overflow-y-auto custom-scrollbar pr-2">
                     ${DATA.level1.bank.map(c => `<div class="bg-white p-3 rounded-xl border border-slate-100 text-left shadow-sm"><span class="text-[10px] font-bold ${c.category === 'Profesorado' ? 'text-inspt-blue' : 'text-teal-600'} uppercase">${c.category}</span><p class="text-xs text-slate-700 mt-1">${c.text}</p></div>`).join('')}
                 </div>
@@ -790,7 +838,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             const id = state.level2.seq[i];
             if(id){
                 const h = DATA.level2.allHitos[id];
-                slots.innerHTML += `<div class="flex items-start gap-3 bg-inspt-blue text-white p-3.5 rounded-xl border border-inspt-dark shadow-md animate-fade-in"><span class="w-6 h-6 rounded-full bg-inspt-light text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">${i+1}</span><div><span class="text-xs font-extrabold block tracking-wide">${h.text}</span><p class="text-[9px] text-sky-100 mt-1 leading-normal">${h.desc}</p></div></div>`;
+                slots.innerHTML += `<div class="flex items-start gap-3 bg-inspt-blue text-white p-3.5 rounded-xl border border-inspt-dark shadow-sm animate-fade-in"><span class="w-6 h-6 rounded-full bg-inspt-light text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">${i+1}</span><div><span class="text-xs font-extrabold block tracking-wide">${h.text}</span><p class="text-[9px] text-sky-100 mt-1 leading-normal">${h.desc}</p></div></div>`;
             } else {
                 slots.innerHTML += `<div class="flex items-center gap-3 bg-slate-100/80 p-3.5 rounded-xl border-2 border-dashed border-slate-300 text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 text-slate-400 text-xs font-black flex items-center justify-center shrink-0">${i+1}</span><span class="text-xs italic font-medium">Vacante disponible...</span></div>`;
             }
@@ -799,16 +847,16 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
         if (!state.level2.done) {
             Object.entries(DATA.level2.allHitos).forEach(([key,h]) => {
                 if(!state.level2.seq.includes(key)){
-                    opts.innerHTML += `<button onclick="playClickSound();selectHito('${key}')" class="w-full text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-inspt-light hover:bg-slate-50 transition-all shadow-sm flex items-start gap-2.5 transform hover:-translate-y-0.5"><span class="text-xs font-black text-inspt-blue mt-0.5">▶</span><div><span class="text-xs font-bold text-slate-800 block">${h.text}</span><span class="text-[10px] text-slate-500 leading-normal block mt-1">${h.desc.substring(0,105)}...</span></div></button>`;
+                    opts.innerHTML += `<button onclick="playClickSound();selectHito('${key}')" class="w-full text-left p-3.5 rounded-xl bg-white border border-slate-200 hover:border-inspt-light hover:bg-slate-50 transition-all shadow-sm hover:shadow-lg flex items-start gap-2.5 transform hover:-translate-y-0.5"><span class="text-inspt-blue mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg></span><div><span class="text-xs font-bold text-slate-800 block">${h.text}</span><span class="text-[10px] text-slate-500 leading-normal block mt-1">${h.desc.substring(0,105)}...</span></div></button>`;
                 } else {
-                    opts.innerHTML += `<div class="w-full text-left p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 flex items-start gap-2.5 select-none opacity-60"><span class="text-xs mt-0.5 font-bold">✔</span><div><span class="text-xs font-extrabold block text-slate-400">${h.text}</span></div></div>`;
+                    opts.innerHTML += `<div class="w-full text-left p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-400 flex items-start gap-2.5 select-none opacity-60"><span class="mt-0.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg></span><div><span class="text-xs font-extrabold block text-slate-400">${h.text}</span></div></div>`;
                 }
             });
             if(state.level2.seq.length===5) checkLevel2();
         } else {
             // MODO CONSULTA PERMANENTE
             document.getElementById('l2-title-options').innerHTML = "<b>Guía Permanente:</b> Secuencia Administrativa Validada.";
-            opts.innerHTML = `<div class="p-5 bg-sky-50 rounded-xl border border-sky-100 text-sm text-slate-600 leading-relaxed text-center"><span class="text-3xl block mb-2">📋</span>El proceso administrativo de inscripción cuenta con fases de riguroso cumplimiento. Mantén presente esta línea temporal.</div>`;
+            opts.innerHTML = `<div class="p-5 bg-sky-50 rounded-xl border border-sky-100 text-sm text-slate-600 leading-relaxed text-center"><span class="block flex justify-center mb-2"><svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg></span>El proceso administrativo de inscripción cuenta con fases de riguroso cumplimiento. Mantén presente esta línea temporal.</div>`;
         }
     }
     
@@ -845,7 +893,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
                 document.getElementById('lnew-progress-text').textContent='¡Validación Completada!';
                 document.getElementById('lnew-progress-text').style.color = '';
                 document.getElementById('lnew-question-text').style.color = '';
-                document.getElementById('lnew-question-text').innerHTML=`<div class="text-center w-full py-2"><span class="text-3xl block">🔬</span><h5 class="text-emerald-800 font-extrabold text-sm mt-1">¡Diagnóstico Concluido!</h5><p class="text-[11px] text-slate-500 leading-relaxed font-normal mt-1">Has respondido con éxito cuestiones vinculadas con la inscripción y el ingreso.</p></div>`;
+                document.getElementById('lnew-question-text').innerHTML=`<div class="text-center w-full py-2"><span class="block flex justify-center"><svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></span><h5 class="text-emerald-800 font-extrabold text-sm mt-1">¡Diagnóstico Concluido!</h5><p class="text-[11px] text-slate-500 leading-relaxed font-normal mt-1">Has respondido con éxito cuestiones vinculadas con la inscripción y el ingreso.</p></div>`;
                 unlockBtn('btn-next-lnew');
                 state.levelNew.done = true;
             }
@@ -863,10 +911,10 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
                 <div class="space-y-3 max-h-[260px] overflow-y-auto custom-scrollbar pr-3 text-left">
                     ${DATA.levelNew.questions.map((q) => `<div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
                         <div class="flex items-start gap-2">
-                            <span class="mt-0.5 text-lg">${q.isTrue ? '✅' : '❌'}</span>
+                            <span class="mt-0.5 ${q.isTrue ? 'text-emerald-600' : 'text-rose-600'}">${q.isTrue ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'}</span>
                             <div>
                                 <p class="text-[11px] text-slate-700 font-bold mb-1 italic">"${q.statement}"</p>
-                                <p class="text-[10px] text-indigo-700 bg-indigo-50 p-2 rounded-lg border border-indigo-100">${q.feedback}</p>
+                                <p class="text-[10px] text-[#0A3F60] bg-[#0A3F60]/10 p-2 rounded-xl border border-[#0A3F60]/20">${q.feedback}</p>
                             </div>
                         </div>
                     </div>`).join('')}
@@ -895,20 +943,20 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             if(idx < scenarios.length){
                 const sc = scenarios[idx];
                 document.getElementById('case-avatar-name').textContent=sc.avatarName;
-                document.getElementById('case-avatar-icon').textContent=sc.avatarIcon;
+                document.getElementById('case-avatar-icon').innerHTML=iconSvg(sc.avatarIcon, 'w-8 h-8');
                 document.getElementById('case-avatar-role').textContent=sc.avatarRole;
                 document.getElementById('case-avatar-footer').textContent=sc.avatarFooter||'Reglamento General';
                 document.getElementById('case-chapter-title').textContent=sc.chapterTitle;
                 document.getElementById('case-title').textContent=sc.title;
                 document.getElementById('case-description').textContent=sc.description;
-                document.getElementById('case-options').innerHTML=sc.options.map((opt,i)=>`<button onclick="playClickSound();submitScenarioOption(${i})" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-inspt-light hover:bg-slate-50 transition-all shadow-sm text-xs md:text-sm font-semibold flex items-center gap-3 transform hover:-translate-y-0.5"><span class="w-6 h-6 rounded-full bg-inspt-blue/10 text-inspt-blue flex items-center justify-center font-bold text-xs shrink-0">${i===0?'A':'B'}</span><span class="text-slate-700 leading-relaxed">${opt.text}</span></button>`).join('');
+                document.getElementById('case-options').innerHTML=sc.options.map((opt,i)=>`<button onclick="playClickSound();submitScenarioOption(${i})" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-inspt-light hover:bg-slate-50 transition-all shadow-sm hover:shadow-lg text-xs md:text-sm font-semibold flex items-center gap-3 transform hover:-translate-y-0.5"><span class="w-6 h-6 rounded-full bg-inspt-blue/10 text-inspt-blue flex items-center justify-center font-bold text-xs shrink-0">${i===0?'A':'B'}</span><span class="text-slate-700 leading-relaxed">${opt.text}</span></button>`).join('');
             } else {
                 document.getElementById('case-avatar-name').textContent='Ingresante';
-                document.getElementById('case-avatar-icon').textContent='👑';
+                document.getElementById('case-avatar-icon').innerHTML='<svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>';
                 document.getElementById('case-avatar-role').textContent='Estatus: Regular';
                 document.getElementById('case-avatar-footer').textContent='Acreditación completa';
                 document.getElementById('case-title').textContent='¡Resolución Completa de Casos!';
-                document.getElementById('case-description').innerHTML=`<div class="text-center p-5 bg-emerald-50 rounded-2xl border border-emerald-200 animate-fade-in"><span class="text-5xl">👑</span><h4 class="font-black text-emerald-800 mt-2 text-base">¡Felicitaciones!</h4><p class="text-xs text-slate-600 mt-1">Demostraste una excelente competencia para diagnosticar dilemas estudiantiles.</p></div>`;
+                document.getElementById('case-description').innerHTML=`<div class="text-center p-5 bg-emerald-50 rounded-xl border border-emerald-200 animate-fade-in"><span class="flex justify-center"><svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg></span><h4 class="font-black text-emerald-800 mt-2 text-base">¡Felicitaciones!</h4><p class="text-xs text-slate-600 mt-1">Demostraste una excelente competencia para diagnosticar dilemas estudiantiles.</p></div>`;
                 document.getElementById('case-options').innerHTML='';
                 unlockBtn('btn-next-l3');
                 state.level3.done = true;
@@ -917,7 +965,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             // MODO CONSULTA PERMANENTE
             document.getElementById('l3-instructions').innerHTML = "<b>Guía Permanente:</b> Repaso de la toma de decisiones basada en el reglamento.";
             document.getElementById('case-avatar-name').textContent='Consulta';
-            document.getElementById('case-avatar-icon').textContent='📚';
+            document.getElementById('case-avatar-icon').innerHTML='<svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>';
             document.getElementById('case-avatar-role').textContent='Guía Permanente';
             document.getElementById('case-avatar-footer').textContent='Normativa Validada';
             document.getElementById('case-title').textContent='Dilemas Resueltos';
@@ -927,7 +975,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
                     ${DATA.level3.scenarios.map((sc, index) => `<div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
                         <span class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1 block">Caso ${index+1}: ${sc.title}</span>
                         <p class="text-xs font-semibold text-slate-700 mb-2 italic">"${sc.description}"</p>
-                        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-2 rounded-r">
+                        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-2 rounded-r-xl">
                             <p class="text-[10px] text-emerald-800 font-bold">Respuesta Reglamentaria:</p>
                             <p class="text-[10px] text-slate-600 mt-1">${sc.options.find(o=>o.isCorrect).text}</p>
                         </div>
@@ -961,10 +1009,10 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
                 document.getElementById('l5-progress-text').textContent=`Pauta Académica ${idx+1} de ${bank.length}`;
                 document.getElementById('l5-question-category').textContent=`Regla: ${task.category}`;
                 document.getElementById('l5-question-text').textContent=task.question;
-                document.getElementById('l5-options-container').innerHTML=task.options.map((opt,i)=>`<button onclick="playClickSound();submitLevel5Answer(${i})" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-slate-100 transition-all shadow-sm text-xs md:text-sm font-semibold flex items-start gap-3 transform hover:-translate-y-0.5"><span class="w-6 h-6 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">${i===0?'A':'B'}</span><span class="text-slate-700 leading-relaxed">${opt.text}</span></button>`).join('');
+                document.getElementById('l5-options-container').innerHTML=task.options.map((opt,i)=>`<button onclick="playClickSound();submitLevel5Answer(${i})" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-[#B85C00] hover:bg-slate-100 transition-all shadow-sm hover:shadow-lg text-xs md:text-sm font-semibold flex items-start gap-3 transform hover:-translate-y-0.5"><span class="w-6 h-6 rounded-full bg-[#B85C00]/15 text-[#B85C00] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">${i===0?'A':'B'}</span><span class="text-slate-700 leading-relaxed">${opt.text}</span></button>`).join('');
             } else {
                 document.getElementById('l5-progress-text').textContent='';document.getElementById('l5-question-category').textContent='';
-                document.getElementById('l5-question-text').innerHTML=`<div class="text-center w-full py-4 bg-teal-50 rounded-2xl border border-teal-200 animate-fade-in"><span class="text-5xl block">⚖️</span><h4 class="font-extrabold text-sm text-teal-800 mt-2">¡Nivel 5 Concluido!</h4><p class="text-xs text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">Has demostrado conocimiento de la reglamentación académica.</p></div>`;
+                document.getElementById('l5-question-text').innerHTML=`<div class="text-center w-full py-4 bg-emerald-50 rounded-xl border border-emerald-200 animate-fade-in"><span class="block flex justify-center"><svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg></span><h4 class="font-extrabold text-sm text-emerald-800 mt-2">¡Nivel 5 Concluido!</h4><p class="text-xs text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">Has demostrado conocimiento de la reglamentación académica.</p></div>`;
                 document.getElementById('l5-options-container').innerHTML='';
                 unlockBtn('btn-next-l5');
                 state.level5.done=true;
@@ -977,10 +1025,10 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             
             document.getElementById('l5-question-text').innerHTML = `<div class="w-full text-left">
                 <div class="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-3">
-                    ${DATA.level5.bank.map((b) => `<div class="bg-white p-4 rounded-xl border border-teal-100 shadow-sm">
-                        <span class="text-[10px] uppercase font-bold text-teal-600 tracking-wider mb-1 block">${b.category}</span>
+                    ${DATA.level5.bank.map((b) => `<div class="bg-white p-4 rounded-xl border border-[#B85C00]/20 shadow-sm">
+                        <span class="text-[10px] uppercase font-bold text-[#B85C00] tracking-wider mb-1 block">${b.category}</span>
                         <p class="text-[11px] font-bold text-slate-700 mb-2">${b.question}</p>
-                        <p class="text-[10px] text-teal-800 bg-teal-50 p-2.5 rounded-lg border border-teal-100">${b.options.find(o=>o.isCorrect).text}</p>
+                        <p class="text-[10px] text-[#B85C00] bg-[#B85C00]/10 p-2.5 rounded-xl border border-[#B85C00]/20">${b.options.find(o=>o.isCorrect).text}</p>
                     </div>`).join('')}
                 </div>
             </div>`;
@@ -1008,20 +1056,20 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
         const hBg=document.getElementById('modal-header-bg'),sIcon=document.getElementById('modal-status-icon'),sBadge=document.getElementById('modal-status-badge'),badgeCont=document.getElementById('modal-status-badge-container'),actionBtn=document.getElementById('modal-action-btn');
         if(ok){
             hBg.className='bg-emerald-600 p-4 flex justify-between items-center text-white';
-            document.getElementById('modal-header-title').innerHTML='<span>🎉</span> Decisión Correcta';
-            sIcon.textContent='🏆';
+            document.getElementById('modal-header-title').innerHTML='<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg> Decisión Correcta';
+            sIcon.innerHTML='<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>';
             badgeCont.className='w-12 h-12 rounded-full flex items-center justify-center text-3xl shadow-inner bg-emerald-50 text-emerald-600 border border-emerald-100';
-            sBadge.className='bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider border border-emerald-200';
+            sBadge.className='bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-xl uppercase tracking-wider border border-emerald-200';
             sBadge.textContent='Éxito';
-            actionBtn.className='w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-md transform hover:-translate-y-0.5 cursor-pointer';
+            actionBtn.className='w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer';
         } else {
             hBg.className='bg-rose-600 p-4 flex justify-between items-center text-white';
-            document.getElementById('modal-header-title').innerHTML='<span>⚠️</span> Desvío de la Ruta';
-            sIcon.textContent='❌';
+            document.getElementById('modal-header-title').innerHTML='<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Desvío de la Ruta';
+            sIcon.innerHTML='<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
             badgeCont.className='w-12 h-12 rounded-full flex items-center justify-center text-3xl shadow-inner bg-rose-50 text-rose-600 border border-rose-100';
-            sBadge.className='bg-rose-100 text-rose-800 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider border border-rose-200';
+            sBadge.className='bg-rose-100 text-rose-800 text-[10px] font-extrabold px-2.5 py-1 rounded-xl uppercase tracking-wider border border-rose-200';
             sBadge.textContent='Alerta';
-            actionBtn.className='w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-md transform hover:-translate-y-0.5 cursor-pointer';
+            actionBtn.className='w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer';
         }
         document.getElementById('modal-status-title').textContent=title;
         document.getElementById('modal-explanation').textContent=text;
