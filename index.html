@@ -189,7 +189,7 @@
                     <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 2: Gestión de Procesos Administrativos</span>
                     <h2 class="text-2xl font-black text-inspt-dark">La Inscripción</h2>
                 </div>
-                <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1.5 rounded-lg border border-amber-200 font-bold shrink-0">Consulta en Detalle el Reglamento de Estudios</span>
+                <a href="https://inspt.utn.edu.ar/reglamentos-estudiantiles/" target="_blank" class="bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3 py-1.5 rounded-lg border border-amber-200 font-bold shrink-0 transition-colors">Consulta en Detalle el Reglamento de Estudios</a>
             </div>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed">
                 Antes de iniciar el cursado de la carrera, debes cumplir secuencialmente una serie de requisitos administrativos obligatorios.<br>
@@ -213,7 +213,7 @@
                         <p class="text-[10px] text-slate-400 mb-2 leading-tight">Acceso a la información para matriculación.</p>
                         <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-inner flex items-center justify-center">
                             <a href="https://inspt.utn.edu.ar/inscripcion-a-carreras/" target="_blank" title="Ir a inscripción INSPT-UTN">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://inspt.utn.edu.ar/inscripcion-a-carreras/" 
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAAC80lEQVR4nO2bSw6bMBCGvylIWRqpB+hRzM2qHqk3gKPkBngZCfR3YRuI+kirJhG0MwsE4lv80mhsz8Mm/sTGD3+Eg/POO/9SPlmxPpkx1jezbjFGa6n/2/focf7JfCNJEtDIPk+ggUbECSDMECVJ07v0OP88vgXAoJkhzGjsmpmxxzRaI4vXdobUQfz6Dj3OP5dv9x+pA8JU3B2nj+T4faMe51/IB0kDQNQMsJiG1P6cf7Ue5/+az97bkiQjgGC5c2sQkN6hx/nn80s+HkNqIV5brE8XEadG1gP5TG3du/Q4/zy+LcEJlAgFINxMJNDYNexLIEfT7/wDk6ZG5RgV5vKZU6P1b9SccyYNR9Pv/AMrqW+QNOxy3aYGbVDxfpzcv+fjkVScVwsaym/S1GSfawCP33Py2b/ZedKW6za5nJVtqAu3+/eEfLrI+jBj1jXaopaomVyTJrWULfqA+p3/DT6ZaUhm1rMY8WpWiXK+8vzolPx6YC4Hqt1eu1rhJF+fT8ev+ZGUu0Zse+0GrQdr9+95eevrWZmxA+vXP/Ha/oB/tR7nn8OHm+VVWdeWmiTdrCS8FdQX7++fkN9VqHZVqy0hyrsu6xJ+NP3OP7BdGaNUsmbYZjqiVk97/nta3vp0kfVbrzfM1J7SRRBuZvbJ89/z8UgTaNjqz/WzdBXCXRB7/J6ML6vyOktXdtxpnbnLji/Td+7fM/KLlTZCauuqDDlJqlaQY+p3/he2i9V4F8n7z63TcDT9zj+wXR0yTzizViq3JGlat+ij6Xf+Ib/dX4AyOhlr1blWstbu8AH1O/8La8mj7axD7gBjNwGpxQBEWgzC9AY9zr+CL5eLwq1eM2Ix8oGZxcw6j99/gU8XAYsRJ7Cexexzrm7dapP/0Pqd/97qLF2N0DiVSZ2S9daHn59Pyd/dXwiCscM09utNhtTOkAyRPs7H0+/8A6tZEaV/FNchu/wW6ris9/fPyN/dX8hxvI4+b29hriF+NP3OO/8/898A19wwiMZsJi4AAAAASUVORK5CYII=" 
          alt="QR Oficial INSPT-UTN" 
          class="w-36 h-36 object-contain">
 </a>
@@ -265,10 +265,10 @@
                             <span class="text-[10px] uppercase font-bold text-indigo-600 tracking-wider block" id="lnew-progress-text">Caso 1 de 10</span>
                             <span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Mesa de Ayuda</span>
                         </div>
-                        <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Declaración del Aspirante:</h4>
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider mb-2" style="color:#000000" id="lnew-declaracion-label">Declaración del Aspirante:</h4>
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative min-h-[120px] flex items-center">
                             <span class="absolute top-2 left-2 text-slate-200 text-4xl select-none font-serif leading-none">"</span>
-                            <p class="text-xs md:text-sm text-slate-700 font-semibold italic pl-6 pr-4 leading-relaxed" id="lnew-question-text"></p>
+                            <p class="text-xs md:text-sm font-semibold italic pl-6 pr-4 leading-relaxed" id="lnew-question-text"></p>
                         </div>
                     </div>
                     <div class="flex gap-4 mt-6 justify-center" id="lnew-action-buttons">
@@ -305,7 +305,7 @@
             </div>
             <div class="mt-8 flex justify-between items-center border-t pt-4 w-full">
                 <button onclick="playClickSound(); changeSection('sec-level2')" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center gap-1 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Regresar al Nivel 2
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Regresar al Nivel 3
                 </button>
                 <div class="flex gap-2 ml-auto">
                     <button id="btn-next-lnew" disabled onclick="playConfirmSound(); changeSection('sec-level3')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
@@ -552,6 +552,9 @@
     const SECTIONS = ['sec-onboarding','sec-level1','sec-level2','sec-level-new','sec-level3','sec-level5','sec-fin'];
     const PROGRESS_MAP = {'sec-onboarding':10,'sec-level1':25,'sec-level2':45,'sec-level-new':65,'sec-level3':80,'sec-level5':95,'sec-fin':100};
 
+    // Paleta de colores alternada para las tarjetas (Nivel 1 y Nivel 3)
+    const ALT_COLORS = ['#fcaf07', '#689fab'];
+
     const DATA = {
         level1: { bank: [
             { text: "Te prepara para planificar, conducir y evaluar las clases en los niveles secundario y superior.", category: "Profesorado", title: "Profesorado en Disciplinas Industriales", feedback: "¡Excelente! Los Profesorados del INSPT preparan al docente para ejercer en escuelas secundarias y de nivel superior con sólidas herramientas pedagógicas y didácticas." },
@@ -745,8 +748,8 @@
         
         if (!state.level1.done) {
             if (idx < bank.length) {
-                const desafioColor = (idx % 2 === 0) ? 'text-black' : 'text-inspt-blue';
-cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 animate-fade-in"><span class="text-[10px] uppercase font-bold ${desafioColor} tracking-wider block mb-2">Desafío ${idx+1} de 5</span><h5 class="text-xs font-bold text-slate-400 mb-1">Descriptor:</h5><p class="text-xs md:text-sm text-slate-700 leading-relaxed font-semibold italic">"${bank[idx].text}"</p></div>`;            } else {
+                const desafioColor = ALT_COLORS[idx % 2];
+cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 animate-fade-in"><span class="text-[10px] uppercase font-bold tracking-wider block mb-2" style="color:${desafioColor}">Desafío ${idx+1} de 5</span><h5 class="text-xs font-bold mb-1" style="color:#000000">Descriptor:</h5><p class="text-xs md:text-sm leading-relaxed font-semibold italic" style="color:${desafioColor}">"${bank[idx].text}"</p></div>`;            } else {
                 cont.innerHTML = `<div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-200 text-center animate-fade-in"><span class="text-4xl block">🏆</span><h4 class="font-extrabold text-sm text-emerald-800 mt-2">¡Nivel 1 Completado!</h4><p class="text-xs text-slate-600 mt-1">Conoces la diferencia entre Profesorados y Tecnicaturas.</p></div>`;
                 unlockBtn('btn-next-l1');
                 state.level1.done = true;
@@ -832,10 +835,16 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
         
         if (!state.levelNew.done) {
             if (idx < qs.length) {
+                const declColor = ALT_COLORS[idx % 2];
                 document.getElementById('lnew-progress-text').textContent=`Declaración ${idx+1} de ${qs.length}`;
+                document.getElementById('lnew-progress-text').style.color = declColor;
+                document.getElementById('lnew-declaracion-label').style.color = '#000000';
                 document.getElementById('lnew-question-text').innerHTML=qs[idx].statement;
+                document.getElementById('lnew-question-text').style.color = declColor;
             } else {
                 document.getElementById('lnew-progress-text').textContent='¡Validación Completada!';
+                document.getElementById('lnew-progress-text').style.color = '';
+                document.getElementById('lnew-question-text').style.color = '';
                 document.getElementById('lnew-question-text').innerHTML=`<div class="text-center w-full py-2"><span class="text-3xl block">🔬</span><h5 class="text-emerald-800 font-extrabold text-sm mt-1">¡Diagnóstico Concluido!</h5><p class="text-[11px] text-slate-500 leading-relaxed font-normal mt-1">Has respondido con éxito cuestiones vinculadas con la inscripción y el ingreso.</p></div>`;
                 unlockBtn('btn-next-lnew');
                 state.levelNew.done = true;
@@ -844,6 +853,8 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-2xl shadow-sm border border-s
             // MODO CONSULTA PERMANENTE
             document.getElementById('lnew-instructions').innerHTML = "<b>Guía Permanente:</b> Repaso de mitos y realidades reglamentarias validadas en Mesa de Ayuda.";
             document.getElementById('lnew-progress-text').textContent = 'Índice de Normativa';
+            document.getElementById('lnew-progress-text').style.color = '';
+            document.getElementById('lnew-question-text').style.color = '';
             document.getElementById('lnew-action-buttons').classList.add('hidden');
             document.getElementById('lnew-question-text').parentElement.classList.remove('flex', 'items-center', 'min-h-[120px]');
             document.getElementById('lnew-question-text').parentElement.classList.add('p-2');
