@@ -147,6 +147,10 @@
                         <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
                         <span class="text-[10px] font-bold text-slate-500 text-center uppercase">5. Régimen y<br>Regularidad</span>
                     </div>
+                    <div class="relative z-10 flex flex-col items-center gap-2 w-full md:w-auto">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold shadow-sm ring-4 ring-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                        <span class="text-[10px] font-bold text-slate-500 text-center uppercase">6. Mapa de<br>Contactos</span>
+                    </div>
                 </div>
             </div>
 
@@ -445,7 +449,49 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Regresar al Nivel 4
                 </button>
                 <div class="flex gap-2 ml-auto">
-                    <button id="btn-next-l5" disabled onclick="playConfirmSound(); changeSection('sec-fin')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
+                    <button id="btn-next-l5" disabled onclick="playConfirmSound(); changeSection('sec-level6')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
+                        Continuar al Nivel 6 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
+                        Volver al Índice <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-level6" class="hidden bg-white rounded-xl shadow-lg border border-slate-100 p-6 transition-all duration-300 relative">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-3">
+                <div>
+                    <span class="text-xs font-bold text-inspt-blue uppercase tracking-widest">Nivel 6: Mapa de Contactos y Trámites</span>
+                    <h2 class="text-2xl font-black text-inspt-dark">¿A quién consulto?</h2>
+                </div>
+                <div class="bg-[#40C5F2]/15 text-inspt-dark text-xs px-3 py-1.5 rounded-xl border border-[#40C5F2]/30 font-bold shrink-0">
+                    Uniones correctas: <span id="l6-score" class="text-sm font-black">0</span> de <span id="l6-total">7</span>
+                </div>
+            </div>
+            <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="l6-instructions">
+                Cada área del INSPT atiende trámites distintos. <span class="text-inspt-blue font-bold">Instrucción:</span> tocá un trámite de la izquierda y luego el área responsable a la derecha para unirlos con una línea. Al acertar, se revelará el correo de consulta correspondiente.
+            </p>
+            <div id="level6-board" class="relative bg-slate-50 border border-slate-200 rounded-xl p-4 md:p-6">
+                <svg id="level6-lines" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:1;"></svg>
+                <div class="grid grid-cols-2 gap-6 md:gap-16 relative" style="z-index:2;">
+                    <div>
+                        <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Trámite / Consulta</h4>
+                        <div id="level6-actions" class="space-y-2.5"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 text-right">Área Responsable</h4>
+                        <div id="level6-areas" class="space-y-2.5"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="level6-consult-list" class="hidden space-y-3"></div>
+            <div class="mt-8 flex justify-between items-center border-t pt-4 w-full">
+                <button onclick="playClickSound(); changeSection('sec-level5')" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center gap-1 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Regresar al Nivel 5
+                </button>
+                <div class="flex gap-2 ml-auto">
+                    <button id="btn-next-l6" disabled onclick="playConfirmSound(); changeSection('sec-fin')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Finalizar Ruta Académica <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
                     <button onclick="changeSection('sec-fin')" class="btn-return-index hidden bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-xl transition-all inline-flex items-center gap-2 shadow-sm">
@@ -519,9 +565,13 @@
                         <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">4</div>
                         <span class="text-sm font-bold leading-tight">Toma de Decisiones</span>
                     </button>
-                    <button onclick="changeSection('sec-level5')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1 md:col-start-2">
+                    <button onclick="changeSection('sec-level5')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
                         <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">5</div>
                         <span class="text-sm font-bold leading-tight">Régimen y Regularidad</span>
+                    </button>
+                    <button onclick="changeSection('sec-level6')" class="p-4 bg-slate-50 hover:bg-inspt-blue hover:text-white text-inspt-dark rounded-xl border border-slate-200 transition-all text-left flex items-center gap-3 group shadow-sm hover:shadow-lg hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:text-inspt-blue shrink-0 text-lg">6</div>
+                        <span class="text-sm font-bold leading-tight">Mapa de Contactos y Trámites</span>
                     </button>
                 </div>
             </div>
@@ -581,8 +631,8 @@
     function playSuccessSound() { _playTone('sine', [[587.33,0],[880,0.15]], 0.1, 0.3); }
     function playFailureSound() { _playTone('sawtooth', [[180,0],[120,0.12]], 0.1, 0.25); }
 
-    const SECTIONS = ['sec-onboarding','sec-level1','sec-level2','sec-level-new','sec-level3','sec-level5','sec-fin'];
-    const PROGRESS_MAP = {'sec-onboarding':10,'sec-level1':25,'sec-level2':45,'sec-level-new':65,'sec-level3':80,'sec-level5':95,'sec-fin':100};
+    const SECTIONS = ['sec-onboarding','sec-level1','sec-level2','sec-level-new','sec-level3','sec-level5','sec-level6','sec-fin'];
+    const PROGRESS_MAP = {'sec-onboarding':8,'sec-level1':20,'sec-level2':35,'sec-level-new':50,'sec-level3':62,'sec-level5':75,'sec-level6':90,'sec-fin':100};
 
     // Paleta de colores alternada para las tarjetas (Nivel 1 y Nivel 3)
     const ALT_COLORS = ['#B85C00', '#0A3F60'];
@@ -723,7 +773,31 @@
         ]}
     };
 
-    let state = { progress:10, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false} };
+    DATA.level6 = { pairs: [
+        { id: 'p1', action: 'Solicitud de ingreso a la carrera y recepción de documentación de matriculación', area: 'Departamento de Alumnos (Sede Triunvirato)',
+          areaFull: 'Departamento de Alumnos (Sede Triunvirato): gestión administrativa inicial del estudiantado, lo cual comprende las solicitudes de ingreso a las respectivas carreras, la recepción de la documentación obligatoria de matriculación, la emisión de libretas de estudio y la expedición de constancias de materias aprobadas.',
+          email: 'deptoalumnos@inspt.utn.edu.ar y constancias@inspt.utn.edu.ar' },
+        { id: 'p2', action: 'Reconocimiento de materias aprobadas en otra institución de educación superior', area: 'Depto. de Alumnos - Sector Equivalencias',
+          areaFull: 'Departamento de Alumnos - Sector Equivalencias (Sede Triunvirato): Atiende los procesos como el reconocimiento de asignaturas aprobadas en otras instituciones de educación superior, la tramitación de simultaneidad de carreras, las solicitudes para rendir exámenes libres de inglés técnico, los pedidos de acreditación de competencias y los cambios de especialidad.',
+          email: 'equivalencias@inspt.utn.edu.ar' },
+        { id: 'p3', action: 'Blanqueo de contraseña del portal de autogestión SysAcad', area: 'Coordinación Académica',
+          areaFull: 'Coordinación Académica (en ambas sedes): encargada del soporte operativo: realiza el blanqueo de contraseñas del portal de autogestión SysAcad, tramita la restitución de la condición de alumno regular y recepciona las notas de solicitud para mesas especiales de examen destinadas a la finalización de carreras. Los canales varían según la franja horaria: tm@inspt.utn.edu.ar (para los turnos mañana y tarde) y coordinacion.tn@inspt.utn.edu.ar (para el turno noche).',
+          email: 'tm@inspt.utn.edu.ar (turnos mañana y tarde) y coordinacion.tn@inspt.utn.edu.ar (turno noche)' },
+        { id: 'p4', action: 'Solicitud de reincorporación por haber quedado libre en una asignatura', area: 'Depto. de Apoyo a Alumnos y Docentes',
+          areaFull: 'Departamento de Apoyo a Alumnos y Docentes: Dedicado de manera exclusiva a la atención y gestión presencial en los dos establecimientos del Instituto (Sede Triunvirato, 1er piso; Sede Combatientes de Malvinas, 2do piso). En este espacio se inician los trámites de solicitud de reincorporación a asignaturas en caso de haber quedado en condición de libre, así como la solicitud de constancias de examen y de alumno regular.',
+          email: null },
+        { id: 'p5', action: 'Restablecimiento de la cuenta de correo electrónico institucional', area: 'Ayuda TIC',
+          areaFull: 'Ayuda TIC: Destinado al soporte técnico de la infraestructura digital y al restablecimiento de las cuentas de correo electrónico de dominio institucional.',
+          email: 'ayuda@inspt.utn.edu.ar' },
+        { id: 'p6', action: 'Inconvenientes de acceso, navegación o interacción con las aulas virtuales', area: 'Campus Virtual',
+          areaFull: 'Campus Virtual: Eje de asistencia para los inconvenientes de acceso, navegación e interacción con las aulas virtuales.',
+          email: 'admin.campus@inspt.utn.edu.ar' },
+        { id: 'p7', action: 'Consulta pedagógica sobre el contenido particular de una materia', area: 'Directores de Carreras',
+          areaFull: 'Directores de Carreras: Constituyen la referencia para orientar consultas pedagógicas o de contenidos particulares de cada una de las materias que integran las carreras.',
+          email: null }
+    ]};
+
+    let state = { progress:8, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false}, level6:{matched:[],selected:null,correct:0,done:false} };
 
     function changeSection(id) { 
         SECTIONS.forEach(s=>document.getElementById(s).classList.add('hidden')); 
@@ -763,7 +837,7 @@
         const badge = document.getElementById('streak-badge');
         const count = document.getElementById('streak-count');
         
-        if (state.progress === 10 || isCompleted) {
+        if (state.progress === 8 || isCompleted) {
             badge.classList.add('hidden');
             badge.classList.remove('flex');
             return;
@@ -1051,6 +1125,131 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
     }
 
     let _modalCb=null;
+
+    function shuffleArr(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function emailLabel(pair) {
+        return pair.email ? pair.email : 'Atención presencial (sin correo específico)';
+    }
+
+    function initLevel6() {
+        const pairs = DATA.level6.pairs;
+        document.getElementById('l6-score').textContent = state.level6.correct;
+        document.getElementById('l6-total').textContent = pairs.length;
+
+        if (!state.level6.done) {
+            document.getElementById('level6-board').classList.remove('hidden');
+            document.getElementById('level6-consult-list').classList.add('hidden');
+
+            if (!state.level6.actionOrder) state.level6.actionOrder = shuffleArr(pairs.map(p=>p.id));
+            if (!state.level6.areaOrder) state.level6.areaOrder = shuffleArr(pairs.map(p=>p.id));
+
+            const actionsEl = document.getElementById('level6-actions');
+            const areasEl = document.getElementById('level6-areas');
+
+            const renderCard = (id, side, alignRight) => {
+                const p = pairs.find(x => x.id === id);
+                const label = side === 'action' ? p.action : p.area;
+                const matched = state.level6.matched.includes(id);
+                const selected = state.level6.selected && state.level6.selected.side === side && state.level6.selected.id === id;
+                let cls = `w-full ${alignRight ? 'text-right' : 'text-left'} p-3 rounded-xl border text-xs font-semibold transition-all `;
+                if (matched) cls += 'bg-emerald-50 border-emerald-300 text-emerald-800 cursor-default';
+                else if (selected) cls += 'bg-inspt-blue text-white border-inspt-blue shadow-sm cursor-pointer';
+                else cls += 'bg-white border-slate-200 hover:border-inspt-light text-slate-700 cursor-pointer shadow-sm hover:shadow-lg transform hover:-translate-y-0.5';
+                const handler = matched ? '' : `onclick="playClickSound();selectLevel6('${side}','${id}')"`;
+                return `<button id="l6-${side}-${id}" ${matched ? 'disabled' : ''} ${handler} class="${cls}">${label}</button>`;
+            };
+
+            actionsEl.innerHTML = state.level6.actionOrder.map(id => renderCard(id, 'action', false)).join('');
+            areasEl.innerHTML = state.level6.areaOrder.map(id => renderCard(id, 'area', true)).join('');
+
+            requestAnimationFrame(drawLevel6Lines);
+        } else {
+            document.getElementById('level6-board').classList.add('hidden');
+            document.getElementById('l6-instructions').innerHTML = '<b>Guía Permanente:</b> Áreas responsables y correos de consulta del INSPT.';
+            const list = document.getElementById('level6-consult-list');
+            list.classList.remove('hidden');
+            list.innerHTML = pairs.map(p => `<div class="bg-white p-4 rounded-xl border border-[#40C5F2]/30 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-700 mb-1">${p.action}</p>
+                <p class="text-xs font-black text-inspt-dark mb-1">→ ${p.area}</p>
+                <p class="text-[10px] text-slate-500 leading-relaxed mb-2">${p.areaFull}</p>
+                <p class="text-[10px] text-inspt-dark bg-[#40C5F2]/10 inline-block px-2 py-1 rounded-xl border border-[#40C5F2]/20 font-bold">${emailLabel(p)}</p>
+            </div>`).join('');
+        }
+    }
+
+    function drawLevel6Lines() {
+        const board = document.getElementById('level6-board');
+        const svg = document.getElementById('level6-lines');
+        if (!board || !svg || state.level6.matched.length === 0) { if (svg) svg.innerHTML = ''; return; }
+        const boardRect = board.getBoundingClientRect();
+        svg.setAttribute('viewBox', `0 0 ${boardRect.width} ${boardRect.height}`);
+        let lines = '';
+        state.level6.matched.forEach(id => {
+            const a = document.getElementById(`l6-action-${id}`);
+            const b = document.getElementById(`l6-area-${id}`);
+            if (!a || !b) return;
+            const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+            const x1 = ra.right - boardRect.left, y1 = ra.top - boardRect.top + ra.height / 2;
+            const x2 = rb.left - boardRect.left, y2 = rb.top - boardRect.top + rb.height / 2;
+            lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#10B981" stroke-width="2" stroke-linecap="round"></line>`;
+            lines += `<circle cx="${x1}" cy="${y1}" r="3.5" fill="#10B981"></circle><circle cx="${x2}" cy="${y2}" r="3.5" fill="#10B981"></circle>`;
+        });
+        svg.innerHTML = lines;
+    }
+    window.addEventListener('resize', () => { if (state.level6 && !state.level6.done) drawLevel6Lines(); });
+
+    function selectLevel6(side, id) {
+        if (state.level6.done) return;
+        if (state.level6.matched.includes(id) && state.level6.selected === null) return;
+        if (!state.level6.selected) {
+            state.level6.selected = { side, id };
+            initLevel6();
+            return;
+        }
+        if (state.level6.selected.side === side) {
+            state.level6.selected = { side, id };
+            initLevel6();
+            return;
+        }
+        const actionId = side === 'action' ? id : state.level6.selected.id;
+        const areaId = side === 'area' ? id : state.level6.selected.id;
+        state.level6.selected = null;
+        checkLevel6Match(actionId, areaId);
+    }
+
+    function checkLevel6Match(actionId, areaId) {
+        const pairs = DATA.level6.pairs;
+        if (actionId === areaId) {
+            const pair = pairs.find(p => p.id === actionId);
+            state.level6.matched.push(actionId);
+            state.level6.correct++;
+            updateStreak(true);
+            playSuccessSound();
+            const emailMsg = `Este trámite se resuelve en <strong>${pair.area}</strong>.<br><br>Correo de consulta: <strong>${emailLabel(pair)}</strong>`;
+            showModal(true, '¡Área Correcta!', emailMsg, state.level6.matched.length === pairs.length ? 'Ver Resumen' : 'Siguiente Unión', () => {
+                initLevel6();
+                if (state.level6.matched.length === pairs.length) {
+                    state.level6.done = true;
+                    unlockBtn('btn-next-l6');
+                    initLevel6();
+                }
+            });
+        } else {
+            updateStreak(false);
+            playFailureSound();
+            initLevel6();
+            showModal(false, 'Unión Incorrecta', 'Ese trámite no corresponde a esa área. Revisá qué gestiona cada dependencia y volvé a intentar la unión.', 'Reintentar', null);
+        }
+    }
+
     function showModal(ok,title,text,btnText,cb){
         _modalCb=cb;
         const hBg=document.getElementById('modal-header-bg'),sIcon=document.getElementById('modal-status-icon'),sBadge=document.getElementById('modal-status-badge'),badgeCont=document.getElementById('modal-status-badge-container'),actionBtn=document.getElementById('modal-action-btn');
@@ -1072,7 +1271,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
             actionBtn.className='w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all shadow-sm hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer';
         }
         document.getElementById('modal-status-title').textContent=title;
-        document.getElementById('modal-explanation').textContent=text;
+        document.getElementById('modal-explanation').innerHTML=text;
         actionBtn.textContent=btnText;
         
         const modal=document.getElementById('feedback-modal');
@@ -1094,8 +1293,8 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
     }
     
     function resetGame(){
-        state = {progress:10, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false}};
-        ['btn-next-l1','btn-next-l2','btn-next-lnew','btn-next-l3','btn-next-l5'].forEach(lockBtn);
+        state = {progress:8, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false}, level6:{matched:[],selected:null,correct:0,done:false}};
+        ['btn-next-l1','btn-next-l2','btn-next-lnew','btn-next-l3','btn-next-l5','btn-next-l6'].forEach(lockBtn);
         // Resetear visualización original de las instrucciones en los niveles
         document.getElementById('l1-instructions').innerHTML = `El INSPT cuenta dentro de su oferta educativa con Profesorados y Tecnicaturas.<br><span class="text-inspt-blue font-bold">Instrucción:</span> Evalúa detalladamente el texto descripto en cada tarjeta activa y decide si pertenece al campo de la enseñanza o al de aplicación puramente técnica.`;
         document.getElementById('l1-action-buttons').classList.remove('hidden');
@@ -1106,13 +1305,14 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
         document.getElementById('lnew-question-text').parentElement.classList.remove('p-2');
         document.getElementById('l3-instructions').textContent = "Las decisiones sobre el cumplimiento de asistencia, procesos de cursado y evaluación definen la trayectoria.";
         document.getElementById('l5-instructions').textContent = "Como alumno regular de la UTN-INSPT, debes manejar con precisión los mecanismos de cursado, asistencia, acreditaciones e inscripciones a exámenes finales para asegurar tu permanencia sin contratiempos.";
+        document.getElementById('l6-instructions').innerHTML = `Cada área del INSPT atiende trámites distintos. <span class="text-inspt-blue font-bold">Instrucción:</span> tocá un trámite de la izquierda y luego el área responsable a la derecha para unirlos con una línea. Al acertar, se revelará el correo de consulta correspondiente.`;
         
-        initLevel1(); initLevel2(); initLevelNew(); initLevel3(); initLevel5(); 
+        initLevel1(); initLevel2(); initLevelNew(); initLevel3(); initLevel5(); initLevel6(); 
         changeSection('sec-onboarding');
     }
     
     window.onload = function(){
-        initLevel1(); initLevel2(); initLevelNew(); initLevel3(); initLevel5(); 
+        initLevel1(); initLevel2(); initLevelNew(); initLevel3(); initLevel5(); initLevel6(); 
         updateProgressBar();
     };
     </script>
