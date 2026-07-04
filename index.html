@@ -800,44 +800,7 @@
     ]};
 
     let state = { progress:8, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false}, level6:{matched:[],selected:null,correct:0,done:false} };
-    let sectionHistory = []; 
-
-function goBackSection() {
-    if (sectionHistory.length > 1) {
-        sectionHistory.pop(); // Elimina la sección actual
-        const previousSection = sectionHistory[sectionHistory.length - 1]; // Toma la anterior
-        
-        // Ejecuta el cambio de sección sin agregarlo de nuevo al historial
-        SECTIONS.forEach(s=>document.getElementById(s).classList.add('hidden')); 
-        const target = document.getElementById(previousSection);
-        target.classList.remove('hidden'); 
-        target.classList.remove('animate-fade-in');
-        void target.offsetWidth; 
-        target.classList.add('animate-fade-in');
-        state.progress = PROGRESS_MAP[previousSection] || state.progress; 
-        updateProgressBar(); 
-        
-        const isCompleted = state.progress === 100;
-        updateStreak(null, isCompleted);
-        
-        const returnBtns = document.querySelectorAll('.btn-return-index');
-        const nextBtns = document.querySelectorAll('[id^="btn-next-"]');
-        const resetL2Btn = document.getElementById('btn-reset-l2');
-        
-        if (isCompleted && previousSection !== 'sec-fin') {
-            returnBtns.forEach(btn => btn.classList.remove('hidden'));
-            nextBtns.forEach(btn => btn.classList.add('hidden'));
-            if(resetL2Btn) resetL2Btn.classList.add('hidden');
-        } else {
-            returnBtns.forEach(btn => btn.classList.add('hidden'));
-            nextBtns.forEach(btn => btn.classList.remove('hidden'));
-            if(resetL2Btn) resetL2Btn.classList.remove('hidden');
-        }
-    }
-}
-    function changeSection(id) { 
-        if (sectionHistory[sectionHistory.length - 1] !== id) {
-        sectionHistory.push(id);
+       function changeSection(id) { 
         SECTIONS.forEach(s=>document.getElementById(s).classList.add('hidden')); 
         const target = document.getElementById(id);
         target.classList.remove('hidden'); 
