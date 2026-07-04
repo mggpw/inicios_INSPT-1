@@ -417,7 +417,7 @@
                     <h2 class="text-2xl font-black text-inspt-dark">El Tablero de Control Académico</h2>
                 </div>
                 <div class="bg-[#B85C00]/10 text-[#B85C00] text-xs px-3 py-1.5 rounded-xl border border-[#B85C00]/20 font-bold shrink-0">
-                    Auditado: <span id="l5-progress-counter" class="text-sm font-black">0</span> de 12 pautas
+                    Auditado: <span id="l5-progress-counter" class="text-sm font-black">0</span> de 14 pautas
                 </div>
             </div>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="l5-instructions">Como alumno regular de la UTN-INSPT, debes manejar con precisión los mecanismos de cursado, asistencia, acreditaciones e inscripciones a exámenes finales para asegurar tu permanencia sin contratiempos.</p>
@@ -425,7 +425,7 @@
                 <div class="lg:col-span-8 p-6 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between min-h-[320px]">
                     <div>
                         <div class="flex items-center justify-between border-b pb-3 mb-4">
-                            <span class="text-[10px] uppercase font-bold text-[#B85C00] tracking-wider block" id="l5-progress-text">Caso de Estudio 1 de 12</span>
+                            <span class="text-[10px] uppercase font-bold text-[#B85C00] tracking-wider block" id="l5-progress-text">Caso de Estudio 1 de 14</span>
                             <span class="bg-[#B85C00]/15 text-[#B85C00] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"></span>
                         </div>
                         <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2" id="l5-question-category">Inscripción y Permanencia:</h4>
@@ -777,6 +777,14 @@
             { category: "Validez temporal de la regularidad", question: "En las Tecnicaturas ¿Cuánto dura la regularidad de una materia?", options: [
                 { text: "En las Tecnicaturas la regularidad de cada materia (cursado aprobado pendiente de final) tendrá una validez de un (1) año", isCorrect: true, feedback: "¡Sobresaliente! La regularidad tendrá una validez de un (1) año." },
                 { text: "En las Tecnicaturas la regularidad de cada materia (cursado aprobado pendiente de final) no se vence", isCorrect: false, feedback: "¡Totalmente erróneo! La regularidad tendrá una validez de un (1) año." }
+            ]},
+            { category: "Validez temporal de la regularidad", question: "En los profesorados ¿Cuánto dura la regularidad de una materia?", options: [
+                { text: "En los profesorados la regularidad de cada materia no tiene vencimiento.", isCorrect: true, feedback: "¡Correcto! La regularidad no tiene vencimiento." },
+                { text: "En los profesorados la regularidad de cada materia (cursado aprobado pendiente de final) tiene una duración de 1 año.", isCorrect: false, feedback: "¡Incorrecto! La regularidad no tiene vencimiento." }
+            ]},
+            { category: "Correlatividades", question: "Un alumno ha aprobado 4 materias este año. El año siguiente...", options: [
+                { text: "Se puede anotar en las materias que quiera consultando los horarios en la página web de la carrera.", isCorrect: false, feedback: "¡Incorrecto! Siempre debes consultar las correlatividades de las materias antes de hacer una inscripción. Puedes consultarlas en la página web o bien en las carteleras de planta baja sede Triunvirato." },
+                { text: "Debe consultar las correlatividades en la página web de la carrera antes de hacer la inscripción analizando las correlatividades.", isCorrect: true, feedback: "¡Correcto! Siempre debes consultar las correlatividades de las materias antes de hacer una inscripción. Puedes consultarlas en la página web o bien en las carteleras de planta baja sede Triunvirato." }
             ]},
             { category: "Límite de aplazos en finales", question: "¿Cuántas veces se puede rendir mal un final?", options: [
                 { text: "Si un alumno obtiene calificación insuficiente (menor a 6 puntos) en un final, puede volver a darlo todas la veces que necesite", isCorrect: false, feedback: "La no aprobación de exámenes finales (<6) 4 veces exige recursar la materia." },
