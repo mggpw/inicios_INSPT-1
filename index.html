@@ -270,6 +270,9 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg> Regresar al Nivel 1
                 </button>
                 <div class="flex gap-2 ml-auto">
+                    <button onclick="playClickSound(); resetSingleLevel('sec-level1')" class="bg-slate-100 text-slate-500 hover:bg-slate-200 font-bold py-3 px-4 rounded-xl transition-all inline-flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89H18"></path></svg> Reiniciar Nivel
+    </button>
                     <button id="btn-next-l2" disabled onclick="playConfirmSound(); changeSection('sec-level-new')" class="bg-slate-300 text-slate-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed transition-all inline-flex items-center gap-2">
                         Continuar al Nivel 3 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                     </button>
@@ -1293,7 +1296,42 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
         box.classList.add('scale-95');
         if(_modalCb){setTimeout(()=>{_modalCb();_modalCb=null;},150);}
     }
-    
+    function resetSingleLevel(levelId) {
+        if (levelId === 'sec-level1') {
+            state.level1 = {idx:0, correct:0, done:false};
+            lockBtn('btn-next-l1');
+            document.getElementById('l1-instructions').innerHTML = `El INSPT cuenta dentro de su oferta educativa con Profesorados y Tecnicaturas.<br><span class="text-inspt-blue font-bold"></span> Evalúa detalladamente el texto descripto en cada tarjeta activa y decide si pertenece al campo de la enseñanza o al de aplicación puramente técnica.`;
+            document.getElementById('l1-action-buttons').classList.remove('hidden');
+            initLevel1();
+        } else if (levelId === 'sec-level2') {
+            resetTimeline();
+        } else if (levelId === 'sec-level-new') {
+            state.levelNew = {idx:0, correct:0, done:false};
+            lockBtn('btn-next-lnew');
+            document.getElementById('lnew-instructions').innerHTML = `Toma el rol de un estudiante avanzado del INSPT que ya maneja las normativas institucionales. Debes evaluar las siguientes declaraciones de los aspirantes y dictaminar <strong>Falso</strong> o <strong>Verdadero</strong>.`;
+            document.getElementById('lnew-action-buttons').classList.remove('hidden');
+            document.getElementById('lnew-question-text').parentElement.classList.add('flex', 'items-center', 'min-h-[120px]');
+            document.getElementById('lnew-question-text').parentElement.classList.remove('p-2');
+            initLevelNew();
+        } else if (levelId === 'sec-level3') {
+            state.level3 = {idx:0, done:false};
+            lockBtn('btn-next-l3');
+            document.getElementById('l3-instructions').textContent = "Las decisiones sobre el cumplimiento de asistencia, procesos de cursado y evaluación definen la trayectoria.";
+            initLevel3();
+        } else if (levelId === 'sec-level5') {
+            state.level5 = {idx:0, correct:0, done:false};
+            lockBtn('btn-next-l5');
+            document.getElementById('l5-instructions').textContent = "Como alumno regular de la UTN-INSPT, debes manejar con precisión los mecanismos de cursado, asistencia, acreditaciones e inscripciones a exámenes finales para asegurar tu permanencia sin contratiempos.";
+            initLevel5();
+        } else if (levelId === 'sec-level6') {
+            state.level6 = {matched:[], selected:null, correct:0, done:false};
+            lockBtn('btn-next-l6');
+            document.getElementById('l6-instructions').innerHTML = `Cada área del INSPT atiende trámites distintos. <span class="text-inspt-blue font-bold">Instrucción:</span> tocá un trámite de la izquierda y luego el área responsable a la derecha para unirlos con una línea. Al acertar, se revelará el correo de consulta correspondiente.`;
+            state.level6.actionOrder = null; 
+            state.level6.areaOrder = null;
+            initLevel6();
+        }
+    }
     function resetGame(){
         state = {progress:8, streak:0, level1:{idx:0,correct:0,done:false}, level2:{seq:[],done:false}, levelNew:{idx:0,correct:0,done:false}, level3:{idx:0,done:false}, level5:{idx:0,correct:0,done:false}, level6:{matched:[],selected:null,correct:0,done:false}};
         ['btn-next-l1','btn-next-l2','btn-next-lnew','btn-next-l3','btn-next-l5','btn-next-l6'].forEach(lockBtn);
