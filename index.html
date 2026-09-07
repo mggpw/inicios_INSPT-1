@@ -1121,7 +1121,7 @@ cont.innerHTML = `<div class="bg-white p-5 rounded-xl shadow-sm border border-sl
 
     function initLevel5(){
         const{idx}=state.level5, bank=DATA.level5.bank;
-        document.getElementById('l5-progress-counter').textContent=state.level5.correct;
+        document.getElementById('l5-progress-counter').textContent=state.level5.idx;
         const prevBtnL5 = document.getElementById('btn-prev-l5');
         
         if (!state.level5.done) {
